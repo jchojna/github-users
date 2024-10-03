@@ -7,16 +7,24 @@ const searchSchema = object({
   searchValue: string().required(),
 });
 
-export const SearchForm = () => {
+type SearchFormProps = {
+  onUpdate: (searchValue: string) => void;
+};
+
+export const SearchForm = ({ onUpdate }: SearchFormProps) => {
   const [validationError, setValidationError] = useState<string | null>(null);
   const { register, handleSubmit } = useForm();
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    setValidationError(null);
-    searchSchema.validate(data).catch((err) => {
-      console.log(err.errors);
-      setValidationError(err.errors[0]);
-    });
+    searchSchema
+      .validate(data)
+      .then(() => {
+        onUpdate(data.searchValue);
+        setValidationError(null);
+      })
+      .catch((err) => {
+        setValidationError(err.errors[0]);
+      });
   };
 
   return (
