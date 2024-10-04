@@ -1,6 +1,7 @@
-import { Avatar, Card, CardHeader } from "@mui/material";
+import { Avatar, Card, CardContent, CardHeader, Skeleton } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { fetchDetails } from "../utils/fetch";
+import UserDetails from "./UserDetails";
 
 const AVATAR_SIZE = 60;
 
@@ -17,18 +18,22 @@ const UserCard = ({
   avatar_url,
   url,
   isUserLoading,
-  userError,
+  // userError,
 }: UserCardProps) => {
   const { data, isLoading, error } = useQuery({
     queryKey: ["details", url],
     queryFn: () => fetchDetails(url),
   });
 
-  console.log(isUserLoading);
-  console.log(userError);
-
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card
+      sx={{
+        maxWidth: 400,
+        display: "flex",
+        flexDirection: "column",
+        padding: "15px",
+      }}
+    >
       <CardHeader
         avatar={
           <Avatar
@@ -39,9 +44,8 @@ const UserCard = ({
         }
         title={login}
         subheader="September 14, 2016"
-      >
-        {isUserLoading && <p>Loading...</p>}
-      </CardHeader>
+      ></CardHeader>
+      <UserDetails details={data} isLoading={isLoading} error={error} />
     </Card>
   );
 };

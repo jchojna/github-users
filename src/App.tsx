@@ -18,6 +18,10 @@ function App() {
     queryFn: () => fetchUsers(searchValue),
   });
 
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
   return (
     <Stack spacing={6} width="100%">
       <header>
@@ -27,7 +31,7 @@ function App() {
         style={{
           display: "grid",
           gap: "20px",
-          gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+          gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))",
         }}
       >
         {!users &&
@@ -37,7 +41,7 @@ function App() {
           ))}
         {users &&
           users.map((user) => (
-            <UserCard isUserLoading={isLoading} userError={error} {...user} />
+            <UserCard key={user.login} isUserLoading={isLoading} {...user} />
           ))}
       </div>
     </Stack>
