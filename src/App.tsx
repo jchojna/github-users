@@ -1,4 +1,4 @@
-import { Container, Grid2, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import "./App.css";
@@ -39,10 +39,7 @@ function App() {
           Array.from(Array(4)).map((_, index) => (
             <UserCardPlaceholder key={index} />
           ))}
-        {users &&
-          users.map((user) => (
-            <UserCard key={user.login} isUserLoading={isLoading} {...user} />
-          ))}
+        {users && users.map((user) => <UserCard key={user.login} {...user} />)}
       </div>
     </Stack>
   );

@@ -1,4 +1,4 @@
-import { Avatar, Card, CardContent, CardHeader, Skeleton } from "@mui/material";
+import { Avatar, Card, CardHeader } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { fetchDetails } from "../utils/fetch";
 import UserDetails from "./UserDetails";
@@ -9,17 +9,9 @@ type UserCardProps = {
   login: string;
   avatar_url: string;
   url: string;
-  isUserLoading: boolean;
-  userError: Error | null;
 };
 
-const UserCard = ({
-  login,
-  avatar_url,
-  url,
-  isUserLoading,
-  // userError,
-}: UserCardProps) => {
+const UserCard = ({ login, avatar_url, url }: UserCardProps) => {
   const { data, isLoading, error } = useQuery({
     queryKey: ["details", url],
     queryFn: () => fetchDetails(url),

@@ -15,30 +15,16 @@ import Tabs from "@mui/material/Tabs";
 import { useState } from "react";
 
 type UserDetailsProps = {
-  details: Details;
+  details: Details | undefined;
   isLoading: boolean;
   error: Error | null;
 };
 
-type Details = {
-  login: string;
-  avatar_url: string;
-  html_url: string;
-  type: "string";
-  name: string | null;
-  company: string | null;
-  blog: string | null;
-  location: string | null;
-  email: string | null;
-  hireable: boolean;
-  bio: string | null;
-  twitter_username: string | null;
-  public_repos: number;
-  followers: number;
-  following: number;
-  created_at: string;
-  updated_at: string;
-};
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
 
 function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
