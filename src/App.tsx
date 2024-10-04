@@ -1,7 +1,10 @@
+import { Container, Grid2, Stack } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import "./App.css";
 import SearchForm from "./components/SearchForm";
+import UserCard from "./components/UserCard";
+import UserCardPlaceholder from "./components/UserCardPlaceholder";
 import { fetchUsers } from "./utils/fetch";
 
 function App() {
@@ -15,29 +18,29 @@ function App() {
     queryFn: () => fetchUsers(searchValue),
   });
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
-
   return (
-    <>
+    <Stack spacing={6} width="100%">
       <header>
         <SearchForm onUpdate={setSearchValue} />
       </header>
-      <main className="container">
+      <div
+        style={{
+          display: "grid",
+          gap: "20px",
+          gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+        }}
+      >
+        {!users &&
+          isLoading &&
+          Array.from(Array(4)).map((_, index) => (
+            <UserCardPlaceholder key={index} />
+          ))}
         {users &&
           users.map((user) => (
-            <div>
-              <img src={user.avatar_url} alt={user.login} />
-              <p>{user.login}</p>
-            </div>
+            <UserCard isUserLoading={isLoading} userError={error} {...user} />
           ))}
-      </main>
-    </>
+      </div>
+    </Stack>
   );
 }
 
