@@ -5,6 +5,7 @@ import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 
 import { useState } from "react";
+import { getFormattedDate } from "../utils/dates";
 import TabPanel from "./TabPanel";
 import UserDetail from "./UserDetail";
 
@@ -49,10 +50,7 @@ export const UserCardTabs = ({
           <UserDetail detail={company} label="Company" />
           <UserDetail detail={location} label="Location" />
           <UserDetail detail={email} label="Email" />
-          <UserDetail
-            detail={new Date(created_at).toLocaleString()}
-            label="On github since"
-          />
+          <UserDetail detail={getFormattedDate(created_at)} label="Joined:" />
         </Stack>
       </TabPanel>
       {/* Bio tab panel */}

@@ -1,15 +1,15 @@
-import { Card, CardContent, CardHeader, Skeleton } from "@mui/material";
+import { CardContent, CardHeader, Skeleton } from "@mui/material";
 
-const UserCardPlaceholder = () => {
+const UserPlaceholder = () => {
   return (
-    <Card sx={{ maxWidth: 400 }} variant="outlined">
+    <>
       <CardHeader
         avatar={
           <Skeleton
             animation="wave"
             variant="circular"
-            width={40}
-            height={40}
+            width={50}
+            height={50}
           />
         }
         title={<Skeleton animation="wave" height={25} width="80%" />}
@@ -19,12 +19,12 @@ const UserCardPlaceholder = () => {
         <Skeleton
           animation="wave"
           height={200}
-          width="80%"
+          width="100%"
           variant="rectangular"
         />
       </CardContent>
-    </Card>
+    </>
   );
 };
 
-export default UserCardPlaceholder;
+export default UserPlaceholder;
