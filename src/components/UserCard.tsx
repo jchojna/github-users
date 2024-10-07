@@ -5,13 +5,7 @@ import UserDetails from "./UserDetails";
 
 const AVATAR_SIZE = 60;
 
-type UserCardProps = {
-  login: string;
-  avatar_url: string;
-  url: string;
-};
-
-const UserCard = ({ login, avatar_url, url }: UserCardProps) => {
+const UserCard = ({ login, avatar_url, url }: User) => {
   const { data, isLoading, error } = useQuery({
     queryKey: ["details", url],
     queryFn: () => fetchDetails(url),

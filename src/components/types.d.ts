@@ -1,8 +1,4 @@
 type Details = {
-  login: string;
-  avatar_url: string;
-  html_url: string;
-  type: string;
   name: string | null;
   company: string | null;
   blog: string | null;
@@ -15,5 +11,11 @@ type Details = {
   followers: number;
   following: number;
   created_at: string;
-  updated_at: string;
+  html_url: string;
+};
+
+type User = {
+  login: string;
+  avatar_url: string;
+  url: string;
 };
