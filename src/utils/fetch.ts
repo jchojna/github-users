@@ -1,8 +1,15 @@
-export const fetchUsers = async ({ queryKey, pageParam, itemsPerPage }) => {
-  const [, searchValue] = queryKey;
+export const fetchUsers = async ({
+  queryKey,
+  pageParam,
+}: {
+  queryKey: string[];
+  pageParam: number;
+}) => {
+  const searchValue = queryKey[1];
+  const itemsPerPage = queryKey[2];
 
   const response = await fetch(
-    `https://api.github.com/search/users?q=${searchValue}&page=${pageParam}&per_page=3`,
+    `https://api.github.com/search/users?q=${searchValue}&page=${pageParam}&per_page=${itemsPerPage}`,
     {
       headers: {
         Authorization: `token ${import.meta.env.VITE_GITHUB_TOKEN}`,
@@ -17,8 +24,8 @@ export const fetchUsers = async ({ queryKey, pageParam, itemsPerPage }) => {
   return response.json();
 };
 
-export const fetchDetails = async ({ queryKey }) => {
-  const [, url] = queryKey;
+export const fetchDetails = async ({ queryKey }: { queryKey: string[] }) => {
+  const url = queryKey[1];
 
   const response = await fetch(url, {
     headers: {

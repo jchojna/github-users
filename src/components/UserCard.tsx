@@ -1,6 +1,6 @@
 import { Card } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
-import { fetchDetails } from "../utils/mockedFetch";
+import { fetchDetails } from "../utils/fetch";
 import UserCardActions from "./UserCardActions";
 import UserCardContent from "./UserCardContent";
 import UserCardHeader from "./UserCardHeader";
@@ -9,7 +9,7 @@ import UserPlaceholder from "./UserCardPlaceholder";
 const UserCard = ({ url }: { url: string }) => {
   const { data, isLoading, error } = useQuery({
     queryKey: ["details", url],
-    queryFn: () => fetchDetails(url),
+    queryFn: fetchDetails,
     enabled: !!url,
   });
 
@@ -18,7 +18,7 @@ const UserCard = ({ url }: { url: string }) => {
   }
 
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return <div data-testid="userCardError">Error: {error.message}</div>;
   }
 
   if (data) {

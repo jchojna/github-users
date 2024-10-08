@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, Skeleton } from "@mui/material";
 const UserPlaceholder = () => {
   return (
     <Card
+      data-testid="userPlaceholder"
       sx={{
         display: "flex",
         flexDirection: "column",

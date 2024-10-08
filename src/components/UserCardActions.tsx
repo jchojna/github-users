@@ -14,7 +14,10 @@ const UserCardActions = ({
   html_url,
 }: UserCardActionsProps) => {
   return (
-    <CardActions sx={{ justifyContent: "space-between" }}>
+    <CardActions
+      sx={{ justifyContent: "space-between" }}
+      data-testid="userCardActions"
+    >
       <div>
         {twitter_username && (
           <IconButton

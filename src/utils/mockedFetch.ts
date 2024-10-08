@@ -1,6 +1,8 @@
-export const fetchUsers = async ({ queryKey, pageParam, itemsPerPage }) => {
+export const fetchUsers = async ({ queryKey, pageParam }) => {
   await delay(1000);
   const users = [];
+  const itemsPerPage = queryKey[2];
+
   for (let i = 1; i <= 5; i++) {
     users.push({
       total_count: 5 * itemsPerPage,

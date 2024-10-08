@@ -39,7 +39,10 @@ const UserCardContent = ({
   };
 
   return (
-    <CardContent sx={{ height: "100%", padding: 0 }}>
+    <CardContent
+      sx={{ height: "100%", padding: 0 }}
+      data-testid="userCardContent"
+    >
       <Tabs
         value={activeTab}
         onChange={handleChange}

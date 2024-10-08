@@ -9,7 +9,7 @@ import "./App.css";
 import SearchForm from "./components/SearchForm";
 import UserCard from "./components/UserCard";
 import UserPlaceholder from "./components/UserCardPlaceholder";
-import { fetchUsers } from "./utils/mockedFetch";
+import { fetchUsers } from "./utils/fetch";
 
 function App() {
   const theme = useTheme();
@@ -23,7 +23,7 @@ function App() {
   const { data, isLoading, isFetching, error, fetchNextPage, hasNextPage } =
     useInfiniteQuery({
       queryKey: ["users", searchValue, itemsPerPage],
-      queryFn: (params) => fetchUsers({ itemsPerPage, ...params }),
+      queryFn: fetchUsers,
       initialPageParam: 1,
       getNextPageParam: (lastPage, allPages) => {
         const maxPages = Math.floor(lastPage.total_count / itemsPerPage);
@@ -43,7 +43,7 @@ function App() {
           <Grid2 container spacing={2}>
             {data.pages.map((group, i) => (
               <React.Fragment key={i}>
-                {group.items.map(({ id, url }) => (
+                {group.items.map(({ id, url }: { id: string; url: string }) => (
                   <Grid2 key={id} size={{ xs: 12, sm: 6, md: 4 }}>
                     <UserCard key={id} url={url} />
                   </Grid2>

@@ -17,6 +17,7 @@ const UserCardHeader = ({
 }: UserCardHeaderProps) => {
   return (
     <CardHeader
+      data-testid="userCardHeader"
       avatar={
         <Avatar
           alt={login}
