@@ -1,4 +1,4 @@
-export const fetchUsers = async ({ queryKey, pageParam }) => {
+export const fetchUsers = async ({ queryKey, pageParam, itemsPerPage }) => {
   const [, searchValue] = queryKey;
 
   const response = await fetch(
@@ -17,7 +17,9 @@ export const fetchUsers = async ({ queryKey, pageParam }) => {
   return response.json();
 };
 
-export const fetchDetails = async (url: string) => {
+export const fetchDetails = async ({ queryKey }) => {
+  const [, url] = queryKey;
+
   const response = await fetch(url, {
     headers: {
       Authorization: `token ${import.meta.env.VITE_GITHUB_TOKEN}`,
