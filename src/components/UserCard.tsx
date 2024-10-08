@@ -1,6 +1,6 @@
 import { Avatar, Card, CardHeader, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
-import { fetchDetails } from "../utils/fetch";
+import { fetchDetails } from "../utils/mockedFetch";
 import UserPlaceholder from "./UserCardPlaceholder";
 import UserDetails from "./UserDetails";
 
