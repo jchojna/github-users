@@ -1,5 +1,4 @@
-import { Box, Stack } from "@mui/material";
-import CircularProgress from "@mui/material/CircularProgress";
+import { Grid2, Stack } from "@mui/material";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import InfiniteScroll from "react-infinite-scroller";
@@ -7,11 +6,12 @@ import InfiniteScroll from "react-infinite-scroller";
 import "./App.css";
 import SearchForm from "./components/SearchForm";
 import UserCard from "./components/UserCard";
+import UserPlaceholder from "./components/UserCardPlaceholder";
 import { fetchUsers } from "./utils/mockedFetch";
 
 function App() {
   const [searchValue, setSearchValue] = useState("");
-  const { data, error, fetchNextPage, hasNextPage, isFetching } =
+  const { data, isLoading, error, fetchNextPage, hasNextPage } =
     useInfiniteQuery({
       queryKey: ["users", searchValue],
       queryFn: fetchUsers,
@@ -24,42 +24,43 @@ function App() {
       enabled: !!searchValue,
     });
 
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
-
   return (
     <Stack spacing={5}>
       <SearchForm onUpdate={setSearchValue} />
-      {isFetching && (
-        <Box>
-          <CircularProgress />
-        </Box>
-      )}
       {error && <div>Error</div>}
-      {/* {users && !users.length && <div>No users found</div>} */}
+      {data?.pages && !data.pages.length && <div>No users found</div>}
       {data?.pages && (
-        <div
-          style={{
-            display: "grid",
-            gap: "20px",
-            gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))",
-          }}
-        >
-          <InfiniteScroll
-            loadMore={() => fetchNextPage()}
-            hasMore={hasNextPage}
-            loader={<div key={0}>Loading more users...</div>}
-          >
+        <InfiniteScroll loadMore={() => fetchNextPage()} hasMore={hasNextPage}>
+          <Grid2 container spacing={2}>
             {data.pages.map((group, i) => (
               <React.Fragment key={i}>
-                {group.items.map((user) => {
-                  return <UserCard key={user.id} {...user} />;
+                {group.items.map(({ id, url }) => {
+                  return (
+                    <Grid2 size={{ xs: 12, sm: 6, md: 4 }}>
+                      <UserCard key={id} url={url} />
+                    </Grid2>
+                  );
                 })}
               </React.Fragment>
             ))}
-          </InfiniteScroll>
-        </div>
+          </Grid2>
+        </InfiniteScroll>
+      )}
+      {isLoading && (
+        <Grid2 container spacing={2}>
+          <Grid2 size={{ xs: 12, sm: 6, md: 4 }}>
+            <UserPlaceholder />
+          </Grid2>
+          <Grid2 size={{ xs: 12, sm: 6, md: 4 }}>
+            <UserPlaceholder />
+          </Grid2>
+          <Grid2 size={{ xs: 12, sm: 6, md: 4 }}>
+            <UserPlaceholder />
+          </Grid2>
+          <Grid2 size={{ xs: 12, sm: 6, md: 4 }}>
+            <UserPlaceholder />
+          </Grid2>
+        </Grid2>
       )}
     </Stack>
   );

@@ -3,13 +3,16 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import XIcon from "@mui/icons-material/X";
 import { Button, CardActions, IconButton } from "@mui/material";
 
-type UserDetailsProps = Pick<Details, "twitter_username" | "blog" | "html_url">;
+type UserCardActionsProps = Pick<
+  Details,
+  "twitter_username" | "blog" | "html_url"
+>;
 
-export const UserDetails = ({
+const UserCardActions = ({
   twitter_username,
   blog,
   html_url,
-}: UserDetailsProps) => {
+}: UserCardActionsProps) => {
   return (
     <CardActions sx={{ justifyContent: "space-between" }}>
       <div>
@@ -39,4 +42,4 @@ export const UserDetails = ({
   );
 };
 
-export default UserDetails;
+export default UserCardActions;

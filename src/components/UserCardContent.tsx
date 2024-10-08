@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { CardContent, Typography } from "@mui/material";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 import Tab from "@mui/material/Tab";
@@ -9,7 +9,19 @@ import { getFormattedDate } from "../utils/dates";
 import TabPanel from "./TabPanel";
 import UserDetail from "./UserDetail";
 
-export const UserCardTabs = ({
+type UserCardContentProps = {
+  name: string | null;
+  company: string | null;
+  location: string | null;
+  email: string | null;
+  bio: string | null;
+  public_repos: number;
+  followers: number;
+  following: number;
+  created_at: string;
+};
+
+const UserCardContent = ({
   name,
   company,
   location,
@@ -19,7 +31,7 @@ export const UserCardTabs = ({
   followers,
   following,
   created_at,
-}: Details) => {
+}: UserCardContentProps) => {
   const [activeTab, setActiveTab] = useState(0);
 
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
@@ -27,7 +39,7 @@ export const UserCardTabs = ({
   };
 
   return (
-    <>
+    <CardContent sx={{ height: "100%", padding: 0 }}>
       <Tabs
         value={activeTab}
         onChange={handleChange}
@@ -39,6 +51,7 @@ export const UserCardTabs = ({
         <Tab label="Bio" />
         <Tab label="Stats" />
       </Tabs>
+
       {/* About tab panel */}
       <TabPanel value={activeTab} index={0}>
         <Stack
@@ -53,6 +66,7 @@ export const UserCardTabs = ({
           <UserDetail detail={getFormattedDate(created_at)} label="Joined:" />
         </Stack>
       </TabPanel>
+
       {/* Bio tab panel */}
       <TabPanel value={activeTab} index={1}>
         {bio && (
@@ -65,6 +79,7 @@ export const UserCardTabs = ({
           </Typography>
         )}
       </TabPanel>
+
       {/* Stats tab panel */}
       <TabPanel value={activeTab} index={2}>
         <Stack
@@ -78,8 +93,8 @@ export const UserCardTabs = ({
           <Chip label={`${following} following`} />
         </Stack>
       </TabPanel>
-    </>
+    </CardContent>
   );
 };
 
-export default UserCardTabs;
+export default UserCardContent;

@@ -1,8 +1,14 @@
-import { CardContent, CardHeader, Skeleton } from "@mui/material";
+import { Card, CardContent, CardHeader, Skeleton } from "@mui/material";
 
 const UserPlaceholder = () => {
   return (
-    <>
+    <Card
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        padding: "15px",
+      }}
+    >
       <CardHeader
         avatar={
           <Skeleton
@@ -23,7 +29,7 @@ const UserPlaceholder = () => {
           variant="rectangular"
         />
       </CardContent>
-    </>
+    </Card>
   );
 };
 
