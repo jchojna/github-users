@@ -3,8 +3,11 @@ import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { object, string } from "yup";
 
+const ghUsernameRegex = /^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*$/;
 const searchSchema = object({
-  searchValue: string().required(),
+  searchValue: string()
+    .required("Enter a GitHub username")
+    .matches(ghUsernameRegex, "Invalid GitHub username"),
 });
 
 type SearchFormProps = {
@@ -37,6 +40,7 @@ export const SearchForm = forwardRef(
           setValidationError(null);
         })
         .catch((err) => {
+          onSearchSubmit("");
           setValidationError(err.errors[0]);
         });
     };
