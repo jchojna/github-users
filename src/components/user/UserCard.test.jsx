@@ -3,10 +3,10 @@ import "@testing-library/jest-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render, screen } from "@testing-library/react";
 import { beforeEach, describe, it, vi } from "vitest";
-import UserCard from "../components/UserCard";
-import { fetchDetails } from "../utils/fetch";
+import { fetchDetails } from "../../utils/fetch";
+import UserCard from "./UserCard";
 
-vi.mock("../utils/fetch");
+vi.mock("../../utils/fetch");
 let queryClient;
 
 const createQueryClient = () => {

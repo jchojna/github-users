@@ -1,7 +1,7 @@
 import { Card } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 
-import { fetchDetails } from "../utils/fetch";
+import { fetchDetails } from "../../utils/fetch";
 import UserCardActions from "./UserCardActions";
 import UserCardContent from "./UserCardContent";
 import UserCardHeader from "./UserCardHeader";

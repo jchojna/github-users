@@ -13,8 +13,8 @@ import emptyStateImage from "./assets/no_data.svg";
 import AppHeader from "./components/AppHeader";
 import CenteredBox from "./components/CenteredBox";
 import Message from "./components/Message";
-import UserCard from "./components/UserCard";
-import UserPlaceholder from "./components/UserCardPlaceholder";
+import UserCard from "./components/user/UserCard";
+import UserPlaceholder from "./components/user/UserCardPlaceholder";
 import { fetchUsers } from "./utils/fetch";
 
 function App() {
@@ -86,6 +86,7 @@ function App() {
               </Grid2>
             </InfiniteScroll>
           )}
+
           {/* Show loading skeleton cards */}
           {(isLoading || (isFetching && hasNextPage)) && (
             <Grid2 container spacing={2}>

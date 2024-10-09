@@ -29,11 +29,7 @@ const UserCardActions = ({
           </IconButton>
         )}
         {blog && (
-          <IconButton
-            href={`https://${blog}`}
-            target="_blank"
-            aria-label="blog"
-          >
+          <IconButton href={blog} target="_blank" aria-label="blog">
             <AutoStoriesIcon />
           </IconButton>
         )}
