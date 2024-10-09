@@ -1,15 +1,16 @@
-import { Box, Container, Grid2, Stack, Typography } from "@mui/material";
+import { Box, Container, Grid2, Stack } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { Fragment, useState } from "react";
 import InfiniteScroll from "react-infinite-scroller";
 
+import GitHubIcon from "@mui/icons-material/GitHub";
 import "./App.css";
 import AppHeader from "./components/AppHeader";
 import UserCard from "./components/UserCard";
 import UserPlaceholder from "./components/UserCardPlaceholder";
-import { fetchUsers } from "./utils/mockedFetch";
+import { fetchUsers } from "./utils/fetch";
 
 function App() {
   const theme = useTheme();
@@ -32,7 +33,7 @@ function App() {
       enabled: !!searchValue,
     });
 
-  const isHeaderMinimized = !!data?.pages || !!isLoading;
+  const isHeaderMinimized = !!data?.pages[0].total_count || !!isLoading;
 
   return (
     <Stack spacing={5} sx={{ height: "100%" }}>
@@ -40,12 +41,27 @@ function App() {
         onSearchSubmit={setSearchValue}
         isMinimized={isHeaderMinimized}
       />
-      <Box sx={{ pt: isHeaderMinimized ? "150px" : "50vh", pb: "50px" }}>
-        <Container>
+      <Box
+        sx={{
+          pt: isHeaderMinimized ? "150px" : "50vh",
+          pb: "50px",
+          minHeight: "100%",
+          mt: 0,
+        }}
+      >
+        <Container sx={{ height: "100%" }}>
           {searchValue.length === 0 && (
-            <Typography variant="h3" sx={{ opacity: 0.2, mt: "100px" }}>
-              Github Users
-            </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "100%",
+                height: "100%",
+              }}
+            >
+              <GitHubIcon sx={{ fontSize: 150 }} />
+            </Box>
           )}
           {error && <div>Error</div>}
           {data?.pages && !data.pages.length && <div>No users found</div>}
