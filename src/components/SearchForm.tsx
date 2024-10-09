@@ -1,5 +1,5 @@
-import { Button, TextField } from "@mui/material";
-import { useState } from "react";
+import { TextField } from "@mui/material";
+import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { object, string } from "yup";
 
@@ -8,37 +8,50 @@ const searchSchema = object({
 });
 
 type SearchFormProps = {
-  onUpdate: (searchValue: string) => void;
+  onSearchChange: () => void;
+  onSearchSubmit: (searchValue: string) => void;
 };
 
-export const SearchForm = ({ onUpdate }: SearchFormProps) => {
-  const [validationError, setValidationError] = useState<string | null>(null);
-  const { register, handleSubmit } = useForm();
+export const SearchForm = forwardRef(
+  ({ onSearchChange, onSearchSubmit }: SearchFormProps, ref) => {
+    const [validationError, setValidationError] = useState<string | null>(null);
+    const { register, handleSubmit, watch } = useForm();
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    searchSchema
-      .validate(data)
-      .then(() => {
-        onUpdate(data.searchValue);
-        setValidationError(null);
-      })
-      .catch((err) => {
-        setValidationError(err.errors[0]);
-      });
-  };
+    const searchValue = watch("searchValue");
 
-  return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <TextField
-        label="Search Users"
-        {...register("searchValue")}
-        error={!!validationError}
-        helperText={validationError}
-      />
+    useImperativeHandle(ref, () => {
+      return {
+        trigger: handleSubmit(onSubmit),
+      };
+    });
 
-      <Button type="submit">Search</Button>
-    </form>
-  );
-};
+    useEffect(() => {
+      onSearchChange();
+    }, [searchValue]); // eslint-disable-line react-hooks/exhaustive-deps
+
+    const onSubmit: SubmitHandler<FieldValues> = (data) => {
+      searchSchema
+        .validate(data)
+        .then(() => {
+          onSearchSubmit(data.searchValue);
+          setValidationError(null);
+        })
+        .catch((err) => {
+          setValidationError(err.errors[0]);
+        });
+    };
+
+    return (
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <TextField
+          label="Search Users"
+          error={!!validationError}
+          helperText={validationError}
+          {...register("searchValue")}
+        />
+      </form>
+    );
+  },
+);
 
 export default SearchForm;

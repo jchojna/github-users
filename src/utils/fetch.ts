@@ -1,10 +1,9 @@
+import { QueryFunctionContext } from "@tanstack/react-query";
+
 export const fetchUsers = async ({
   queryKey,
   pageParam,
-}: {
-  queryKey: string[];
-  pageParam: number;
-}) => {
+}: QueryFunctionContext) => {
   const searchValue = queryKey[1];
   const itemsPerPage = queryKey[2];
 
