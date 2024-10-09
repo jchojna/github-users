@@ -1,22 +1,22 @@
 import { Box } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
-
 import { useEffect, useRef, useState } from "react";
+
 import LinearProgressBar from "./LinearProgressBar";
 import SearchForm from "./SearchForm";
 
 type AppHeaderProps = {
   onSearchSubmit: (searchValue: string) => void;
+  isMinimized: boolean;
 };
 
-const AppHeader = ({ onSearchSubmit }: AppHeaderProps) => {
-  const theme = useTheme();
+const AppHeader = ({ onSearchSubmit, isMinimized }: AppHeaderProps) => {
   const [progress, setProgress] = useState(0);
   const timerRef = useRef<NodeJS.Timeout | undefined>(undefined);
   const searchFormRef = useRef<HTMLFormElement | null>();
 
   useEffect(() => {
-    handleSearchChange();
+    // do not trigger progress bar on start
+    clearInterval(timerRef.current);
   }, []);
 
   const handleSearchChange = () => {
@@ -33,6 +33,7 @@ const AppHeader = ({ onSearchSubmit }: AppHeaderProps) => {
         }
       });
     }, 20);
+
     return () => {
       clearInterval(timerRef.current);
     };
@@ -41,28 +42,28 @@ const AppHeader = ({ onSearchSubmit }: AppHeaderProps) => {
   return (
     <Box
       sx={{
+        alignItems: "center",
+        backdropFilter: "blur(50px)",
         backgroundColor: "rgba(0, 0, 0, 0.5)",
         display: "flex",
         flexDirection: "column",
+        height: isMinimized ? "150px" : "50vh",
         justifyContent: "center",
-        alignItems: "center",
-        height: "50vh",
-        position: "fixed",
-        width: "100%",
-        top: 0,
         left: 0,
+        position: "fixed",
+        top: 0,
+        transition: "height 0.3s",
+        width: "100%",
         zIndex: 1000,
-        backdropFilter: "blur(50px)",
-        [theme.breakpoints.down("md")]: {
-          height: "300px",
-        },
       }}
     >
-      <SearchForm
-        ref={searchFormRef}
-        onSearchChange={handleSearchChange}
-        onSearchSubmit={onSearchSubmit}
-      />
+      <Box sx={{ height: "100%", display: "flex", alignItems: "center" }}>
+        <SearchForm
+          ref={searchFormRef}
+          onSearchChange={handleSearchChange}
+          onSearchSubmit={onSearchSubmit}
+        />
+      </Box>
       <Box sx={{ width: "100%" }}>
         <LinearProgressBar value={progress} />
       </Box>

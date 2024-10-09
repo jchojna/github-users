@@ -32,10 +32,15 @@ function App() {
       enabled: !!searchValue,
     });
 
+  const isHeaderMinimized = !!data?.pages || !!isLoading;
+
   return (
     <Stack spacing={5} sx={{ height: "100%" }}>
-      <AppHeader onSearchSubmit={setSearchValue} />
-      <Box sx={{ pt: "50vh", pb: "50px" }}>
+      <AppHeader
+        onSearchSubmit={setSearchValue}
+        isMinimized={isHeaderMinimized}
+      />
+      <Box sx={{ pt: isHeaderMinimized ? "150px" : "50vh", pb: "50px" }}>
         <Container>
           {searchValue.length === 0 && (
             <Typography variant="h3" sx={{ opacity: 0.2, mt: "100px" }}>
