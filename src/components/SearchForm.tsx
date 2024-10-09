@@ -48,6 +48,7 @@ export const SearchForm = forwardRef(
     return (
       <form onSubmit={handleSubmit(onSubmit)}>
         <TextField
+          sx={{ mt: "30px" }}
           label="Search Users"
           error={!!validationError}
           helperText={validationError}

@@ -1,13 +1,18 @@
-import { Box, Container, Grid2, Stack } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
-import useMediaQuery from "@mui/material/useMediaQuery";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { Fragment, useState } from "react";
 import InfiniteScroll from "react-infinite-scroller";
 
 import GitHubIcon from "@mui/icons-material/GitHub";
+import { Box, Container, Grid2, Stack } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import "./App.css";
+
+import errorImage from "./assets/error.svg";
+import emptyStateImage from "./assets/no_data.svg";
 import AppHeader from "./components/AppHeader";
+import CenteredBox from "./components/CenteredBox";
+import Message from "./components/Message";
 import UserCard from "./components/UserCard";
 import UserPlaceholder from "./components/UserCardPlaceholder";
 import { fetchUsers } from "./utils/fetch";
@@ -33,7 +38,8 @@ function App() {
       enabled: !!searchValue,
     });
 
-  const isHeaderMinimized = !!data?.pages[0].total_count || !!isLoading;
+  const areUsers = !!data?.pages[0].total_count;
+  const isHeaderMinimized = areUsers || !!isLoading;
 
   return (
     <Stack spacing={5} sx={{ height: "100%" }}>
@@ -43,29 +49,24 @@ function App() {
       />
       <Box
         sx={{
-          pt: isHeaderMinimized ? "150px" : "50vh",
+          pt: isHeaderMinimized ? "200px" : "50vh",
           pb: "50px",
-          minHeight: "100%",
+          minHeight: "90%",
           mt: 0,
+          transition: "padding-top 0.3s",
         }}
       >
         <Container sx={{ height: "100%" }}>
           {searchValue.length === 0 && (
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                width: "100%",
-                height: "100%",
-              }}
-            >
+            <CenteredBox>
               <GitHubIcon sx={{ fontSize: 150 }} />
-            </Box>
+            </CenteredBox>
           )}
-          {error && <div>Error</div>}
-          {data?.pages && !data.pages.length && <div>No users found</div>}
-          {data?.pages && (
+          {error && <Message image={errorImage} message={error.message} />}
+          {data?.pages && !areUsers && (
+            <Message image={emptyStateImage} message="No users found!" />
+          )}
+          {areUsers && (
             <InfiniteScroll
               loadMore={() => fetchNextPage()}
               hasMore={hasNextPage}

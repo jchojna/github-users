@@ -72,15 +72,13 @@ const UserCardContent = ({
 
       {/* Bio tab panel */}
       <TabPanel value={activeTab} index={1}>
-        {bio && (
-          <Typography
-            align="left"
-            variant="body2"
-            sx={{ color: "text.secondary" }}
-          >
-            {bio}
-          </Typography>
-        )}
+        <Typography
+          align="left"
+          variant="body2"
+          sx={{ color: "text.secondary" }}
+        >
+          {bio ?? "No bio provided."}
+        </Typography>
       </TabPanel>
 
       {/* Stats tab panel */}

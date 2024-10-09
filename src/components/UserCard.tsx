@@ -29,6 +29,7 @@ const UserCard = ({ url }: { url: string }) => {
           display: "flex",
           flexDirection: "column",
           padding: "15px",
+          height: "100%",
         }}
       >
         <UserCardHeader {...data} />

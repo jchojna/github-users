@@ -1,4 +1,4 @@
-import { Avatar, CardHeader, Typography } from "@mui/material";
+import { Avatar, CardHeader, Link, Typography } from "@mui/material";
 
 const AVATAR_SIZE = 50;
 
@@ -7,6 +7,7 @@ type UserCardHeaderProps = {
   avatar_url: string | null;
   name: string | null;
   hireable: boolean;
+  html_url: string;
 };
 
 const UserCardHeader = ({
@@ -14,6 +15,7 @@ const UserCardHeader = ({
   avatar_url,
   name,
   hireable,
+  html_url,
 }: UserCardHeaderProps) => {
   return (
     <CardHeader
@@ -31,17 +33,19 @@ const UserCardHeader = ({
         />
       }
       title={
-        <Typography
-          variant="h3"
-          color="primary"
-          sx={{
-            fontSize: "1.1rem",
-            fontWeight: "600",
-            textAlign: "left",
-          }}
-        >
-          {name ?? login}
-        </Typography>
+        <Link href={html_url}>
+          <Typography
+            variant="h3"
+            color="primary"
+            sx={{
+              fontSize: "1.1rem",
+              fontWeight: "600",
+              textAlign: "left",
+            }}
+          >
+            {name ?? login}
+          </Typography>
+        </Link>
       }
       subheader={
         <Typography
