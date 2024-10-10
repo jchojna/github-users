@@ -5,7 +5,15 @@ import {
   Typography,
 } from "@mui/material";
 
+import { CONSTS } from "../utils/constants";
+import { getRemainingSeconds } from "../utils/time";
+
 const LinearProgressBar = (props: LinearProgressProps & { value: number }) => {
+  const secondsRemaining = getRemainingSeconds(
+    CONSTS.value.delayInSec,
+    props.value,
+  );
+
   return (
     <Stack spacing={1}>
       <Typography
@@ -14,7 +22,7 @@ const LinearProgressBar = (props: LinearProgressProps & { value: number }) => {
           color: "text.secondary",
           opacity: props.value > 0 && props.value < 100 ? 1 : 0,
         }}
-      >{`Remanining ${(2 - props.value / 50).toFixed(2)}s`}</Typography>
+      >{`Remanining ${secondsRemaining}s`}</Typography>
       <LinearProgress
         variant="determinate"
         sx={{ height: 5, width: "100%" }}

@@ -1,6 +1,8 @@
 import { Box } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 
+import { CONSTS } from "../utils/constants";
+import { getTimerInterval } from "../utils/time";
 import LinearProgressBar from "./LinearProgressBar";
 import SearchForm from "./SearchForm";
 
@@ -34,7 +36,7 @@ const AppHeader = ({ onSearchSubmit, isMinimized }: AppHeaderProps) => {
           return prevProgress + 1;
         }
       });
-    }, 20);
+    }, getTimerInterval(CONSTS.value.delayInSec));
 
     return () => {
       clearInterval(timerRef.current);
