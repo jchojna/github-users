@@ -1,5 +1,5 @@
 import GitHubIcon from "@mui/icons-material/GitHub";
-import { Box, Container, Grid2, Stack } from "@mui/material";
+import { Box, Container, Grid2, Link, Stack } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Fragment, useState } from "react";
@@ -49,7 +49,9 @@ function App() {
         <Container sx={{ height: "100%" }}>
           {searchValue.length === 0 && (
             <CenteredBox>
-              <GitHubIcon sx={{ fontSize: 150 }} />
+              <Link href="https://github.com/" target="_blank">
+                <GitHubIcon sx={{ fontSize: 150 }} />
+              </Link>
             </CenteredBox>
           )}
           {error && <Message image={errorImage} message={error.message} />}
