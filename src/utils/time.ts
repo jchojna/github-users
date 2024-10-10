@@ -12,6 +12,3 @@ export const getRemainingSeconds = (
 export const getTimerInterval = (delayInSec: number) => {
   return (delayInSec * 1000) / 100;
 };
-
-export const delay = (ms: number) =>
-  new Promise((resolve) => setTimeout(resolve, ms));

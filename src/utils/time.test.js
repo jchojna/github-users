@@ -24,8 +24,8 @@ describe("getRemainingSeconds", () => {
 
 describe("getTimerInterval", () => {
   it("should return the correct interval for a given duration", () => {
-    const duration = 10; // 60 seconds
+    const duration = 10;
     const interval = getTimerInterval(duration);
-    expect(interval).toBe(100); // 1 second interval
+    expect(interval).toBe(100);
   });
 });

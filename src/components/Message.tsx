@@ -1,4 +1,5 @@
 import { Stack, Typography } from "@mui/material";
+
 import CenteredBox from "./CenteredBox";
 
 type MessageProps = {
