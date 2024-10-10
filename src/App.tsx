@@ -2,7 +2,6 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import { Box, Container, Grid2, Stack } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { useInfiniteQuery } from "@tanstack/react-query";
 import { Fragment, useState } from "react";
 import InfiniteScroll from "react-infinite-scroller";
 
@@ -14,8 +13,8 @@ import CenteredBox from "./components/CenteredBox";
 import Message from "./components/Message";
 import UserCard from "./components/user/UserCard";
 import UserPlaceholder from "./components/user/UserCardPlaceholder";
+import useUsers from "./hooks/useUsers";
 import { CONSTS } from "./utils/constants";
-import { fetchUsers } from "./utils/fetch";
 
 function App() {
   const theme = useTheme();
@@ -24,19 +23,8 @@ function App() {
   const itemsPerPage = isMobile ? 1 : isTablet ? 2 : 3;
 
   const [searchValue, setSearchValue] = useState("");
-
   const { data, isLoading, isFetching, error, fetchNextPage, hasNextPage } =
-    useInfiniteQuery({
-      queryKey: ["users", searchValue, itemsPerPage],
-      queryFn: fetchUsers,
-      initialPageParam: 1,
-      getNextPageParam: (lastPage, allPages) => {
-        const maxPages = Math.floor(lastPage.total_count / itemsPerPage);
-        const nextPage = allPages.length + 1;
-        return nextPage <= maxPages ? nextPage : undefined;
-      },
-      enabled: !!searchValue,
-    });
+    useUsers(searchValue, itemsPerPage);
 
   const gridSizes = { xs: 12, sm: 6, md: 4 };
   const areUsers = !!data?.pages[0].total_count;
