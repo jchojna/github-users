@@ -1,7 +1,10 @@
 import { Card } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 
+import errorImage from "../../assets/error.svg";
 import { fetchDetails } from "../../utils/fetch";
+import CenteredBox from "../CenteredBox";
+import Message from "../Message";
 import UserCardActions from "./UserCardActions";
 import UserCardContent from "./UserCardContent";
 import UserCardHeader from "./UserCardHeader";
@@ -19,7 +22,13 @@ const UserCard = ({ url }: { url: string }) => {
   }
 
   if (error) {
-    return <div data-testid="userCardError">Error: {error.message}</div>;
+    return (
+      <Card data-testid="userCardError" sx={{ p: 10 }}>
+        <CenteredBox>
+          <Message image={errorImage} message={error.message} />
+        </CenteredBox>
+      </Card>
+    );
   }
 
   if (data) {
