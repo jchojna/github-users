@@ -21,7 +21,7 @@ function App() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const isTablet = useMediaQuery(theme.breakpoints.between("sm", "lg"));
-  const itemsPerPage = isMobile ? 2 : isTablet ? 4 : 6;
+  const itemsPerPage = isMobile ? 1 : isTablet ? 2 : 3;
 
   const [searchValue, setSearchValue] = useState("");
 

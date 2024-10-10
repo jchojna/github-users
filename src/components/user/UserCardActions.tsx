@@ -19,17 +19,28 @@ const UserCardActions = ({
             href={`https://x.com/${twitter_username}`}
             target="_blank"
             aria-label="twitter"
+            data-testid="twitterLink"
           >
             <XIcon />
           </IconButton>
         )}
         {blog && (
-          <IconButton href={blog} target="_blank" aria-label="blog">
+          <IconButton
+            href={blog}
+            target="_blank"
+            aria-label="blog"
+            data-testid="blogLink"
+          >
             <AutoStoriesIcon />
           </IconButton>
         )}
       </div>
-      <Button href={html_url} target="_blank" startIcon={<GitHubIcon />}>
+      <Button
+        href={html_url}
+        target="_blank"
+        startIcon={<GitHubIcon />}
+        data-testid="githubLink"
+      >
         View Profile
       </Button>
     </CardActions>
