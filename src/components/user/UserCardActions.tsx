@@ -3,11 +3,6 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import XIcon from "@mui/icons-material/X";
 import { Button, CardActions, IconButton } from "@mui/material";
 
-type UserCardActionsProps = Pick<
-  Details,
-  "twitter_username" | "blog" | "html_url"
->;
-
 const UserCardActions = ({
   twitter_username,
   blog,

@@ -9,18 +9,6 @@ import { getFormattedDate } from "../../utils/dates";
 import TabPanel from "../TabPanel";
 import UserDetail from "./UserDetail";
 
-type UserCardContentProps = {
-  name: string | null;
-  company: string | null;
-  location: string | null;
-  email: string | null;
-  bio: string | null;
-  public_repos: number;
-  followers: number;
-  following: number;
-  created_at: string;
-};
-
 const UserCardContent = ({
   name,
   company,

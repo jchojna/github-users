@@ -2,14 +2,6 @@ import { Avatar, CardHeader, Link, Typography } from "@mui/material";
 
 const AVATAR_SIZE = 50;
 
-type UserCardHeaderProps = {
-  login: string;
-  avatar_url: string | null;
-  name: string | null;
-  hireable: boolean;
-  html_url: string;
-};
-
 const UserCardHeader = ({
   login,
   avatar_url,
