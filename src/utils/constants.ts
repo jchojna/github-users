@@ -5,6 +5,7 @@ export const CONSTS = {
   },
   label: {
     searchInput: "Search Users",
+    usersEmptyState: "No users found!",
   },
   value: {
     delayInSec: 2,

@@ -24,5 +24,6 @@ body {
 }
 
 .MuiLinearProgress-bar {
+  /* Remove the progress bar animation - did not find another way to do so */
   transition: none !important;
 }

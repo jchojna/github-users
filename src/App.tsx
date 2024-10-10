@@ -1,13 +1,12 @@
-import { useInfiniteQuery } from "@tanstack/react-query";
-import { Fragment, useState } from "react";
-import InfiniteScroll from "react-infinite-scroller";
-
 import GitHubIcon from "@mui/icons-material/GitHub";
 import { Box, Container, Grid2, Stack } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import "./App.css";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { Fragment, useState } from "react";
+import InfiniteScroll from "react-infinite-scroller";
 
+import "./App.css";
 import errorImage from "./assets/error.svg";
 import emptyStateImage from "./assets/no_data.svg";
 import AppHeader from "./components/AppHeader";
@@ -15,6 +14,7 @@ import CenteredBox from "./components/CenteredBox";
 import Message from "./components/Message";
 import UserCard from "./components/user/UserCard";
 import UserPlaceholder from "./components/user/UserCardPlaceholder";
+import { CONSTS } from "./utils/constants";
 import { fetchUsers } from "./utils/fetch";
 
 function App() {
@@ -38,8 +38,10 @@ function App() {
       enabled: !!searchValue,
     });
 
+  const gridSizes = { xs: 12, sm: 6, md: 4 };
   const areUsers = !!data?.pages[0].total_count;
   const isHeaderMinimized = areUsers || !!isLoading;
+  const isSkeletonLoading = isLoading || (isFetching && hasNextPage);
 
   return (
     <Stack spacing={5} sx={{ height: "100%" }}>
@@ -64,19 +66,23 @@ function App() {
           )}
           {error && <Message image={errorImage} message={error.message} />}
           {data?.pages && !areUsers && (
-            <Message image={emptyStateImage} message="No users found!" />
+            <Message
+              image={emptyStateImage}
+              message={CONSTS.label.usersEmptyState}
+            />
           )}
           {areUsers && (
             <InfiniteScroll
               loadMore={() => fetchNextPage()}
               hasMore={hasNextPage}
             >
+              {/* Show users cards */}
               <Grid2 container spacing={2}>
                 {data.pages.map((group, i) => (
                   <Fragment key={i}>
                     {group.items.map(
                       ({ id, url }: { id: string; url: string }) => (
-                        <Grid2 key={id} size={{ xs: 12, sm: 6, md: 4 }}>
+                        <Grid2 key={id} size={gridSizes}>
                           <UserCard key={id} url={url} />
                         </Grid2>
                       ),
@@ -88,10 +94,10 @@ function App() {
           )}
 
           {/* Show loading skeleton cards */}
-          {(isLoading || (isFetching && hasNextPage)) && (
+          {isSkeletonLoading && (
             <Grid2 container spacing={2}>
               {Array.from(Array(itemsPerPage)).map((_, i) => (
-                <Grid2 key={i} size={{ xs: 12, sm: 6, md: 4 }}>
+                <Grid2 key={i} size={gridSizes}>
                   <UserPlaceholder />
                 </Grid2>
               ))}
