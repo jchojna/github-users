@@ -39,7 +39,7 @@ const UserCardContent = ({
         aria-label="User card tabs"
       >
         <Tab label="About" />
-        <Tab label="Bio" />
+        {bio && <Tab label="Bio" />}
         <Tab label="Stats" />
       </Tabs>
 
@@ -59,18 +59,20 @@ const UserCardContent = ({
       </TabPanel>
 
       {/* Bio tab panel */}
-      <TabPanel value={activeTab} index={1}>
-        <Typography
-          align="left"
-          variant="body2"
-          sx={{ color: "text.secondary" }}
-        >
-          {bio ?? "No bio provided."}
-        </Typography>
-      </TabPanel>
+      {bio && (
+        <TabPanel value={activeTab} index={1}>
+          <Typography
+            align="left"
+            variant="body2"
+            sx={{ color: "text.secondary" }}
+          >
+            {bio}
+          </Typography>
+        </TabPanel>
+      )}
 
       {/* Stats tab panel */}
-      <TabPanel value={activeTab} index={2}>
+      <TabPanel value={activeTab} index={bio ? 2 : 1}>
         <Stack
           direction="row"
           useFlexGap
