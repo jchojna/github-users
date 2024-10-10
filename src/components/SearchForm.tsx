@@ -3,11 +3,13 @@ import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { object, string } from "yup";
 
+import { CONSTS } from "../utils/constants";
+
 const ghUsernameRegex = /^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*$/;
 const searchSchema = object({
   searchValue: string()
-    .required("Enter a GitHub username")
-    .matches(ghUsernameRegex, "Invalid GitHub username"),
+    .required(CONSTS.error.emptyUsername)
+    .matches(ghUsernameRegex, CONSTS.error.invalidUsername),
 });
 
 type SearchFormProps = {
@@ -49,7 +51,7 @@ export const SearchForm = forwardRef(
       <form onSubmit={handleSubmit(onSubmit)}>
         <TextField
           sx={{ mt: "30px" }}
-          label="Search Users"
+          label={CONSTS.label.searchInput}
           error={!!validationError}
           helperText={validationError}
           {...register("searchValue")}

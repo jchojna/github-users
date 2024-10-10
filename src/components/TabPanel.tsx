@@ -10,15 +10,16 @@ const TabPanel = (props: TabPanelProps) => {
   const { children, value, index, ...other } = props;
 
   return (
-    <div
+    <Box
       role="tabpanel"
       hidden={value !== index}
       id={`full-width-tabpanel-${index}`}
       aria-labelledby={`full-width-tab-${index}`}
+      sx={{ py: 3, px: 1 }}
       {...other}
     >
-      {value === index && <Box sx={{ p: 2 }}>{children}</Box>}
-    </div>
+      {value === index && children}
+    </Box>
   );
 };
 
